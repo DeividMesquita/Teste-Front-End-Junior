@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+
+:root {
+
+/* Colors: */
+--Primary-color: #102C57;
+--Secundary-color: #EADBC8;
+--BackGround-color: #F2F2F2;
+--Text-color: #333333;
+--BoxShadow-color: #00000033;
+--Header-text-color: #F8F0E5;
+--Hover-color: #3C5885;
+--hover: #DAC0A3;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.header {
+    background-color: var(--Primary-color);
+    height: 6.25rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0.625rem 0.5rem var(--BoxShadow-color);
+}
+
+.fixed-top {
+    top : -1px !important;
+}
+
+.navbar__menu-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.25rem;
+}
+
+.navbar__menu-item a {
+    text-decoration: none;
+    color: var(--Header-text-color);
+    display: block;
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+
+.navbar__menu-item a:hover {
+    color: var(--Hover-color);
+}
+
+
+@media (max-width: 480px) {
+    .header{
+        height: 3.75rem;
+    }
+
+    .navbar__logo img{
+        height: 2.5rem;
+    }
+}
