@@ -149,6 +149,7 @@ body {
 .section-title a:hover {
     background-color: var(--Hover-color);
 }
+
 .carousel-shadow img {
     position: absolute;
     width: 9rem;
@@ -186,7 +187,7 @@ body {
 
 /* SECTION REVIWES */
 
-.reviews__container {
+.reviews-container {
     gap: 1.25rem;
     margin-top: 1rem !important;
 }
@@ -196,12 +197,11 @@ body {
     background-color: #DFD7BF;
     border-radius: 0.625rem;
     width: 38.125rem;
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
 }
 
 .reviews__container--item p {
-    font-size: 1.5rem;
-    line-height: 1.6875rem;
-    font-weight: 400;
     display: -webkit-box;
     -webkit-line-clamp: 9;
     line-clamp: 9;
@@ -209,6 +209,37 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+    margin-bottom: 1.875rem;
+}
+
+.author {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.author p {
+    margin: 0;
+}
+
+.author__name {
+    font-weight: 500;
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
+}
+
+.author span {
+    font-weight: 700;
+    color: var(--Primary-color);
+}
+
+.author__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 
@@ -245,4 +276,15 @@ body {
         font-size: 2.25rem;
         line-height: 2.5rem;
     }
+
+    .reviews__container--item {
+        padding: 1.25rem;
+        font-size: 1.125rem;
+        line-height: 1.3125rem;
+    }
+
+    .author__name {
+    font-size: 1.125rem;
+    line-height: 1.3125rem;
+}
 }

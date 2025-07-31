@@ -3,7 +3,7 @@ const api_url = 'https://api.themoviedb.org/3';
 const id_movie = '617126';
 
 async function getMovie() {
-    const response = await fetch(`${api_url}/movie/${id_movie}?api_key=${api_key}&language=pt-BR&append_to_response=videos,images,credits`);
+    const response = await fetch(`${api_url}/movie/${id_movie}?api_key=${api_key}&language=pt-BR&append_to_response=videos,images,credits,reviews`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
@@ -18,18 +18,21 @@ async function getMovie() {
         year: new Date(movie.release_date).getFullYear(),
         director: movie.credits.crew.find(crew => crew.job === 'Director')?.name || 'Unknown',
         story: movie.credits.crew
-            .filter(crew =>
-                crew.job === 'Writer' || crew.job === 'Story'
-            )
+            .filter(crew => crew.job === 'Writer' || crew.job === 'Story')
             .map(crew => crew.name)
-            .filter((name, index, self) => self.indexOf(name) === index) // remove nomes duplicados
+            .filter((name, index, self) => self.indexOf(name) === index)
             .join(', ') || 'Desconhecido',
-
         lenguage: movie.original_language,
         budget: movie.budget.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
         revenue: movie.revenue.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
         releaseDate: movie.release_date,
         rating: movie.vote_average,
+        reviews: movie.reviews.results.map(review => ({
+            author: review.author,
+            content: review.content,
+            rating: review.author_details.rating,
+            date: new Date(review.created_at).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })
+        })),
         videos: movie.videos.results.map(video => ({
             key: video.key,
             name: video.name,
@@ -49,9 +52,10 @@ async function getMovie() {
             name: actor.name,
             character: actor.character,
             profileUrl: `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-        })),
+        }))
     };
 }
+
 
 async function getMovieDetails() {
     try {
@@ -109,6 +113,8 @@ async function getMovieDetails() {
             elements.revenue.innerHTML = `<h3>Receita:</h3><p>${movie.revenue}</p>`;
         }
 
+         renderReviews(movie.reviews); // <- muito melhor separado
+
         return movie;
 
     } catch (error) {
@@ -163,7 +169,7 @@ async function loadCastCarousel() {
             autoplay: false,
             dots: false,
             nav: false,
-            onInitialized: function() {
+            onInitialized: function () {
                 const carousel = document.getElementById('cast-carousel');
                 if (carousel) {
                     const shadowDiv = document.createElement('div');
@@ -186,4 +192,34 @@ async function loadCastCarousel() {
 
 // Chama ao carregar a página
 loadCastCarousel();
+
+
+function renderReviews(reviews) {
+  const container = document.querySelector('.reviews-container');
+
+  if (!container || reviews.length === 0) {
+    container.innerHTML = '<p class="text-muted">Sem resenhas disponíveis.</p>';
+    return;
+  }
+
+  container.innerHTML = ''; // limpa o conteúdo anterior
+
+  reviews.slice(1, 3).forEach(review => {
+    const reviewElement = document.createElement('div');
+    reviewElement.classList.add('reviews__container--item', 'col-12', 'col-md-6');
+    reviewElement.innerHTML = `
+      <p class="reviews__content">${review.content}</p>
+      <div class="author col-12">
+        <h4 class="author__name col-12">Por: <span>${review.author}</span></h4>
+        <div class="author__info">
+          <p class="author__date">${review.date}</p>
+          <p class="author__rating">
+            Nota: ${review.rating ? `<span>${review.rating}</span> / 10` : 'Sem nota'}
+          </p>
+        </div>
+      </div>
+    `;
+    container.appendChild(reviewElement);
+  });
+}
 
