@@ -41,7 +41,7 @@
     <!-- Header -->
     <header class="header fixed-top">
       <div class="container-xxl">
-        <nav class="navbar">
+        <nav class="navbar navbar-expand-lg" aria-label="Navegação principal">
           <div class="navbar__logo">
             <a href="/" class="navbar__logo-link" aria-label="Página inicial">
               <img
@@ -51,11 +51,32 @@
               />
             </a>
           </div>
-          <div class="navbar__menu">
-            <ul class="navbar__menu-list">
-              <li class="navbar__menu-item"><a href="#">Filmes</a></li>
-
-              <li class="navbar__menu-item"><a href="#">Séries</a></li>
+          <!-- Botão hamburguer Bootstrap -->
+          <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Menu lateral Offcanvas -->
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Filmes</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Séries</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Menu normal para desktop -->
+          <div class="collapse navbar-collapse d-none d-lg-block">
+            <ul class="navbar__menu-list navbar-nav ms-auto">
+              <li class="navbar__menu-item nav-item"><a class="nav-link" href="#">Filmes</a></li>
+              <li class="navbar__menu-item nav-item"><a class="nav-link" href="#">Séries</a></li>
             </ul>
           </div>
         </nav>
@@ -105,11 +126,7 @@
             <h2>Elenco</h2>
             <a href="#">Ver mais</a>
           </div>
-          <div class="owl-carousel owl-theme" id="cast-carousel">
-            <div class="carousel-shadow">
-              <img src="./assets/img/shadow.png" alt="" />
-            </div>
-          </div>
+          <div class="owl-carousel owl-theme" id="cast-carousel"></div>
         </div>
       </section>
 
@@ -128,7 +145,107 @@
           </div>
         </div>
       </section>
+
+      <section class="midia">
+        <div class="container-xxl">
+          <div class="section-title">
+            <h2>Mídia</h2>
+          </div>
+
+          <div class="row">
+            <div class="midia-container d-flex flex-column">
+              <div class="midia__container--item">
+                <div class="section-title --midia">
+                  <h2>Vídeos <span style="opacity: 0.5">(3)</span></h2>
+                  <a href="#">Ver mais</a>
+                </div>
+                <div class="owl-carousel owl-theme" id="videos"></div>
+              </div>
+              <div class="midia__container--item mt-5">
+                <div class="section-title --midia">
+                  <h2>Pôsteres <span style="opacity: 0.5">(15)</span></h2>
+                  <a href="#">Ver mais</a>
+                </div>
+                <div class="owl-carousel owl-theme" id="posters"></div>
+              </div>
+              <div class="midia__container--item mt-5 mb-5">
+                <div class="section-title --midia">
+                  <h2>
+                    Imagens de fundo <span style="opacity: 0.5">(10)</span>
+                  </h2>
+                  <a href="#">Ver mais</a>
+                </div>
+                <div class="owl-carousel owl-theme" id="backdrops"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="recomedations">
+        <div class="container-xxl">
+          <div class="section-title --white">
+            <h2>Recomendações</h2>
+          </div>
+          <div class="owl-carousel owl-theme" id="similar-movies"></div>
+        </div>
+      </section>
     </main>
+
+    <footer class="footer">
+      <div class="container-xxl">
+        <!-- Utilizando a tag <nav> para marcar a navegação principal do rodapé -->
+        <nav class="footer__content" aria-label="Navegação principal do rodapé">
+          <div class="footer__content--logo">
+            <a href="#">
+              <img src="./assets/img/logo.png" alt="Logo" />
+            </a>
+          </div>
+
+          <div class="footer__lists-wrapper">
+            <div class="footer__list">
+              <ul class="footer__list--links">
+                <li>
+                  <a href="#">Sobre</a>
+                </li>
+                <li>
+                  <a href="#">Contato</a>
+                </li>
+                <li>
+                  <a href="#">Suporte</a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer__list">
+              <ul class="footer__list--links">
+                <li>
+                  <a href="#">Adicione um Filme</a>
+                </li>
+                <li>
+                  <a href="#">Adicione uma Série</a>
+                </li>
+                <li>
+                  <a href="#">Discussões</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer__list">
+            <ul class="footer__list--links">
+              <li>
+                <a href="#">Termos de Uso</a>
+              </li>
+              <li>
+                <a href="#">Política de Privacidade</a>
+              </li>
+              <li>
+                <a href="#">Diretrizes</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </footer>
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
