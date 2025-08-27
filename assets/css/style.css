@@ -32,6 +32,10 @@ body {
     box-shadow: 0 0.625rem 0.5rem var(--BoxShadow-color);
 }
 
+.navbar-toggler {
+    display: none;
+}
+
 .fixed-top {
     top: -1px !important;
 }
@@ -56,6 +60,50 @@ body {
 
 .navbar__menu-item a:hover {
     color: var(--Hover-color);
+}
+
+.navbar-toggler {
+    display: none;
+    border: var(--Primary-color) !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="white" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>') !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1.8rem 1.8rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.offcanvas {
+    width: 55% !important;
+    height: 40% !important;
+    background-color: var(--Primary-color) !important;
+    border-radius: 0 0 0rem 0.625rem !important;
+}
+
+.offcanvas-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.offcanvas-item a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: var(--Header-text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.offcanvas-item a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* ABOUT SECTION */
@@ -256,7 +304,22 @@ body {
     margin: 0 !important;
 }
 
-.video-item iframe {
+/* Container para manter a proporção 16:9 */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    /* 16:9 Aspect Ratio */
+    padding-top: 56.25%;
+    /* (9 / 16) * 100% */
+}
+
+/* O iframe preenche todo o espaço do container */
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 1.25rem;
 }
 
@@ -270,13 +333,14 @@ body {
 
 /* backdrops */
 
+
 .backdrop-item img {
     width: 100%;
     height: 100%;
     border-radius: 1.25rem;
 }
 
-/* SECTION RECOMEDATIONS */
+/* SECTION RECOMENDATIONS */
 
 .recomedations {
     background-color: var(--Primary-color);
@@ -287,16 +351,23 @@ body {
     margin-top: 1.875rem !important;
 }
 
-.similar-shadow img {
-    display: block;
+.owl-theme {
+    overflow: visible;
+    margin: 0 auto;
+    position: relative;
+}
+
+.owl-theme::after {
+    display: none;
+    content: "";
     position: absolute;
-    width: 5rem;
-    height: 100%;
     top: 0;
-    right: -15px;
-    left: auto;
+    right: 0;
+    height: 100%;
+    width: 100px;
+    background: linear-gradient(to left, var(--Primary-color) 0%, transparent 100%);
     pointer-events: none;
-    z-index: 99;
+    z-index: 1;
 }
 
 .movie-card {
@@ -380,6 +451,27 @@ body {
 
 
 @media (max-width: 991px) {
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar__menu {
+        display: none;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+    
+    .navbar__menu {
+        display: none !important;
+    }
+
+    .about {
+        margin-top: 9.375rem;
+    }
+
     .about-movie--title {
         margin-top: 3.125rem;
     }
@@ -398,6 +490,10 @@ body {
         left: auto;
         pointer-events: none;
         z-index: 99;
+    }
+
+    .owl-theme::after {
+        display: block;
     }
 
     .footer__content {
@@ -426,6 +522,10 @@ body {
         height: 2.5rem;
     }
 
+    .about {
+        margin-top: 5.625rem;
+    }
+
     .about-movie--cover {
         margin-right: 0;
     }
@@ -433,6 +533,10 @@ body {
     .about-movie--cover img {
         width: 21.625rem;
         height: 32.4375rem;
+    }
+
+    .about-movie--title {
+        margin-top: 1.875rem;
     }
 
     .about-movie h1 {
