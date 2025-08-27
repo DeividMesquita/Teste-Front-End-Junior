@@ -247,11 +247,10 @@ async function loadVideos() {
         });
 
         $('#videos').owlCarousel({
-            items: 1,
             loop: false,
             margin: 20,
             center: false,
-            autowidth: true,
+            autoWidth: true, // <-- Adicione esta linha
             autoplay: false,
             dots: false,
             nav: false,
@@ -265,7 +264,7 @@ async function loadVideos() {
                 }
             },
             responsive: {
-                0: { items: 2, mouseDrag: true, touchDrag: true, center: true },
+                0: { items: 2, mouseDrag: true, touchDrag: true },
                 1024: { items: 3, mouseDrag: false, touchDrag: false }
             }
         });
@@ -304,7 +303,6 @@ async function loadPosters() {
 
         // Inicializa Owl Carousel
         $('#posters').owlCarousel({
-            items: 1,
             loop: false,
             margin: 20,
             center: false,
@@ -361,7 +359,6 @@ async function loadBackdrops() {
 
         // Inicializa Owl Carousel
         $('#backdrops').owlCarousel({
-            items: 1,
             loop: false,
             margin: 20,
             center: false,
