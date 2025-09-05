@@ -38,7 +38,7 @@
     <title>PlayCube</title>
   </head>
   <body>
-    <!-- Header -->
+    <!-- ========= Header ========= -->
     <header class="header fixed-top">
       <div class="container-xxl">
         <nav class="navbar" aria-label="Navegação principal">
@@ -97,10 +97,12 @@
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- ========= Main Content ========= -->
     <main>
+
+      <!-- ========= Section About Movies ========= -->
       <section class="container-xxl">
-        <div class="about d-flex flex-column flex-lg-row align-items-center">
+        <div class="about section d-flex flex-column flex-lg-row align-items-center">
           <!-- Div para chamar poster -->
           <div class="about-movie--cover"></div>
           <div class="about-movie--description">
@@ -136,7 +138,8 @@
         </div>
       </section>
 
-      <section class="carousel">
+      <!-- ========= SECTION CAST ========= -->
+      <section class="carousel section">
         <div class="container-xxl">
           <!-- div componentizada para ser usada em outras areas da pagina -->
           <div class="section-title">
@@ -148,7 +151,9 @@
         </div>
       </section>
 
-      <section class="reviews">
+
+      <!-- ========= SECTION REVIEWS ========= -->
+      <section class="reviews section">
         <div class="container-xxl">
           <div class="section-title --reviews">
             <h2>Resenhas</h2>
@@ -165,7 +170,8 @@
         </div>
       </section>
 
-      <section class="midia">
+      <!-- ========= SECTION MIDIA ========= -->
+      <section class="midia section">
         <div class="container-xxl">
           <div class="section-title">
             <h2>Mídia</h2>
@@ -180,14 +186,14 @@
                   <h2>Vídeos <span style="opacity: 0.5">(3)</span></h2>
                   <a href="#">Ver mais</a>
                 </div>
-                <div class="owl-carousel" id="videos"></div>
+                <div class="owl-carousel owl-midia" id="videos"></div>
               </div>
               <div class="midia__container--item mt-5">
                 <div class="section-title --midia">
                   <h2>Pôsteres <span style="opacity: 0.5">(15)</span></h2>
                   <a href="#">Ver mais</a>
                 </div>
-                <div class="owl-carousel" id="posters"></div>
+                <div class="owl-carousel owl-midia" id="posters"></div>
               </div>
               <div class="midia__container--item mt-5 mb-5">
                 <div class="section-title --midia">
@@ -196,23 +202,25 @@
                   </h2>
                   <a href="#">Ver mais</a>
                 </div>
-                <div class="owl-carousel" id="backdrops"></div>
+                <div class="owl-carousel owl-midia" id="backdrops"></div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="recomedations">
+      <!-- ========= SECTION RECOMENDATIONS ========= -->
+      <section class="recomedations section">
         <div class="container-xxl">
           <div class="section-title --white">
             <h2>Recomendações</h2>
           </div>
-          <div class="owl-carousel owl-theme" id="similar-movies"></div>
+          <div class="owl-carousel" id="similar-movies"></div>
         </div>
       </section>
     </main>
 
+    <!-- ========= Footer ========= -->
     <footer class="footer">
       <div class="container-xxl">
         <!-- Utilizando a tag <nav> para marcar a navegação principal do rodapé -->
@@ -268,6 +276,8 @@
       </div>
     </footer>
 
+    <!-- ========= SCRIPTS ========= -->
+
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Owl Carousel -->
@@ -278,6 +288,6 @@
       referrerpolicy="no-referrer"
     ></script>
     <!-- main js -->
-    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/main.js" defer></script>
   </body>
 </html>

@@ -21,8 +21,33 @@
 }
 
 body {
-    background-color: var(--Header-text-color) !important;
+    background-color: #F8F0E5 !important;
 }
+
+/* ===== Chrome, Edge e Safari ===== */
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 0.625rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--Primary-color), var(--Hover-color));
+    /* gradiente vertical */
+    border-radius: 0.625rem;
+    border: 0.1875rem solid #f0f0f0;
+    /* espaço ao redor da thumb */
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ff3300, #ff9966);
+}
+
+/* ==================== SECTION DA HEADER ==================== */
 
 .header {
     background-color: var(--Primary-color);
@@ -37,7 +62,7 @@ body {
 }
 
 .fixed-top {
-    top: -1px !important;
+    top: -0.0625rem !important;
 }
 
 .navbar__menu-list {
@@ -54,7 +79,7 @@ body {
     display: block;
     font-size: 1.5rem;
     line-height: 1.6875rem;
-    font-weight: 700;
+    font-weight: 600;
     transition: color 0.3s;
 }
 
@@ -87,6 +112,21 @@ body {
     border-radius: 0 0 0rem 0.625rem !important;
 }
 
+.offcanvas-body {
+    padding: 0 !important;
+}
+
+.btn-close {
+    --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e") !important;
+    --bs-btn-close-opacity: 1 !important;
+    --bs-btn-close-hover-opacity: 1 !important;
+    --bs-btn-close-focus-opacity: 1 !important;
+}
+
+.btn-close:focus {
+    box-shadow: none !important;
+}
+
 .offcanvas-list {
     list-style: none;
     padding: 0;
@@ -99,14 +139,14 @@ body {
     color: var(--Header-text-color);
     text-decoration: none;
     font-size: 1rem;
-    transition: background-color 0.3s;
 }
 
 .offcanvas-item a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--Hover-color);
+    transition: 0.3s ease-in-out;
 }
 
-/* ABOUT SECTION */
+/* ==================== ABOUT SECTION ==================== */
 
 .about {
     margin-top: 12.5rem;
@@ -117,8 +157,8 @@ body {
 }
 
 .about-movie--cover img {
-    width: 400px;
-    height: 600px;
+    width: 25rem;
+    height: 37.5rem;
     box-shadow: 0 0.625rem 0.5rem var(--BoxShadow-color);
     border-radius: 0.625rem;
     align-items: center;
@@ -133,6 +173,10 @@ body {
     margin-bottom: 0.625rem;
 }
 
+.about-movie span {
+    font-weight: 400;
+    color: var(--hover);
+}
 
 
 .about-movie h3 {
@@ -153,7 +197,7 @@ body {
     margin-bottom: 1.875rem;
 }
 
-/* SECTION CAROUSEL */
+/* ==================== SECTION CAROUSEL CAST ==================== */
 .carousel {
     background-color: var(--Secundary-color);
     margin-top: 6.25rem;
@@ -170,16 +214,17 @@ body {
     margin-bottom: 1.25rem;
 }
 
-.--reviews {
-    margin-top: 4.5625rem;
-}
-
 .section-title h2 {
     font-size: 2.25rem;
     line-height: 2.5rem;
     font-weight: 700;
     color: var(--Primary-color);
     margin: 0;
+}
+
+.section-title span {
+    font-weight: 400;
+    color: var(--hover);
 }
 
 .section-title a {
@@ -198,15 +243,23 @@ body {
     background-color: var(--Hover-color);
 }
 
-.carousel-shadow img {
+#cast-carousel {
+    overflow: visible;
+    margin: 0 auto;
+    position: relative;
+}
+
+#cast-carousel::after {
+    display: block;
+    content: "";
     position: absolute;
-    width: 9rem;
-    height: 90%;
     top: 0;
-    right: 0;
-    left: auto;
+    right: -1px;
+    height: 100%;
+    width: 120px;
+    background: linear-gradient(to left, var(--Secundary-color) 0%, transparent 100%);
     pointer-events: none;
-    z-index: 99;
+    z-index: 1;
 }
 
 .cast-card img {
@@ -214,6 +267,12 @@ body {
     object-fit: cover;
     margin-bottom: 1.25rem;
     aspect-ratio: 1 / 1;
+}
+
+.cast-card img:hover {
+    scale: 1.01;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 15px var(--Hover-color);
 }
 
 .cast-card h4 {
@@ -233,12 +292,16 @@ body {
 }
 
 
-/* SECTION REVIWES */
+/* ==================== SECTION REVIWES ==================== */
 
 .reviews-container {
     gap: 1.25rem;
     margin-top: 1rem !important;
     margin-bottom: 2.5rem;
+}
+
+.--reviews {
+    margin-top: 70px;
 }
 
 .reviews__container--item {
@@ -291,11 +354,7 @@ body {
     width: 100%;
 }
 
-/* MIDIA SECTION */
-.midia-shadow img {
-    display: none;
-
-}
+/* =========== MIDIA SECTION =========== */
 
 /* videos */
 
@@ -304,6 +363,24 @@ body {
     margin: 0 !important;
 }
 
+.owl-midia {
+    overflow: visible;
+    margin: 0 auto;
+    position: relative;
+}
+
+.owl-midia::after {
+    display: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -1px;
+    height: 100%;
+    width: 3.75rem;
+    background: linear-gradient(to left, var(--Header-text-color) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
 
 #videos .item {
     width: 26.125rem !important;
@@ -336,7 +413,14 @@ body {
     border-radius: 1.25rem;
 }
 
-/* backdrops */
+.poster-item {
+    width: 26.125rem !important;
+    display: inline-block;
+    vertical-align: top;
+
+}
+
+/* Backdrops */
 
 
 .backdrop-item img {
@@ -345,7 +429,15 @@ body {
     border-radius: 1.25rem;
 }
 
-/* SECTION RECOMENDATIONS */
+.backdrop-item {
+    width: 39.75rem !important;
+    height: 100% !important;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+
+/* ================= SECTION RECOMENDATIONS ================ */
 
 .recomedations {
     background-color: var(--Primary-color);
@@ -354,30 +446,24 @@ body {
 .--white h2 {
     color: var(--Header-text-color) !important;
     margin-top: 1.875rem !important;
+    margin-bottom: 0 !important;
 }
 
-.owl-theme {
-    overflow: visible;
-    margin: 0 auto;
-    position: relative;
+#similar-movies {
+    padding: 1.25rem 0 1.25rem 0;
 }
 
-.owl-theme::after {
+#similar-movies::after {
     display: none;
     content: "";
     position: absolute;
     top: 0;
-    right: 0;
+    right: -0.0625rem;
     height: 100%;
-    width: 100px;
+    width: 5.9375rem;
     background: linear-gradient(to left, var(--Primary-color) 0%, transparent 100%);
     pointer-events: none;
     z-index: 1;
-}
-
-.movie-card {
-    font-size: 1.5rem;
-    line-height: 1.6875rem;
 }
 
 .movie-card img {
@@ -385,9 +471,11 @@ body {
 }
 
 .movie-card h3 {
-    font-weight: 700;
+    font-weight: 600;
     margin: 0;
     margin-top: 0.625rem;
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
@@ -400,9 +488,11 @@ body {
     font-weight: 400;
     margin: 0;
     margin-top: 0.625rem;
+    font-size: 1.5rem;
+    line-height: 1.6875rem;
 }
 
-/* FOOTER */
+/* =============== FOOTER ================== */
 
 .footer {
     padding: 3rem 0rem;
@@ -462,6 +552,8 @@ body {
 
 @media (max-width: 991px) {
 
+
+    /* Responsivo header */
     .navbar-toggler {
         display: block;
     }
@@ -490,20 +582,29 @@ body {
         margin-bottom: 1.875rem
     }
 
-    .midia-shadow img {
-        display: block;
-        position: absolute;
-        width: 5rem;
-        height: 100%;
-        top: 0;
-        right: -1px;
-        left: auto;
-        pointer-events: none;
-        z-index: 99;
+    .section-title {
+        margin-bottom: 0.625rem;
     }
 
-    .owl-theme::after {
+    .poster-item,
+    .backdrop-item {
+        width: 300px !important;
+    }
+
+    .owl-midia::after,
+    #similar-movies::after {
         display: block;
+    }
+
+    .movie-card img:hover {
+        border: 1px solid var(--Hover-color);
+        transition: 1s ease-in-out;
+    }
+
+    .backdrop-item img:hover {
+        scale: 1.01;
+        transition: 0.3s ease-in-out;
+        cursor: grab;
     }
 
     .footer__content {
@@ -554,6 +655,10 @@ body {
         line-height: 2.5rem;
     }
 
+    .carousel {
+        margin-top: 2.5rem;
+    }
+
     .reviews__container--item {
         padding: 1.25rem;
         font-size: 1.125rem;
@@ -579,6 +684,10 @@ body {
         width: 275px !important;
         display: inline-block;
         vertical-align: top;
+    }
+
+    .footer {
+        padding: 3rem 0rem 2rem 0rem;
     }
 
     .footer__content {

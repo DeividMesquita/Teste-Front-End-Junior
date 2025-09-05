@@ -2,7 +2,7 @@ const api_key = '3eb7ccd86dc5239c6eb11c595f703236';
 const api_url = 'https://api.themoviedb.org/3';
 const id_movie = '617126';
 
-// Função para obter os detalhes do filme
+// ==================== Função para obter os detalhes do filme ==================== //
 async function getMovieDetails() {
     try {
         // Busca os dados do filme
@@ -55,15 +55,20 @@ async function getMovieDetails() {
         }
 
         if (elements.director) {
-            elements.director.innerHTML = `<h3>Direção:</h3><p>${movie.director}</p>`;
+            elements.director.innerHTML = `<h3>Dirigido por:</h3><p>${movie.director}</p>`;
         }
 
         if (elements.writter) {
-            elements.writter.innerHTML = `<h3>Roteiro:</h3><p>${movie.story}</p>`;
+            elements.writter.innerHTML = `<h3>Escrito por:</h3><p>${movie.story}</p>`;
         }
 
         if (elements.lenguage) {
-            elements.lenguage.innerHTML = `<h3>Idioma:</h3><p>${movie.lenguage.toUpperCase()}</p>`;
+            const languageMap = {
+                'EN': 'Inglês',
+            };
+            const langCode = movie.lenguage.toUpperCase();
+            const langName = languageMap[langCode] || langCode;
+            elements.lenguage.innerHTML = `<h3>Idioma original:</h3><p>${langName}</p>`;
         }
 
         if (elements.releaseDate) {
@@ -89,12 +94,14 @@ async function getMovieDetails() {
 getMovieDetails();
 
 
-
+// ==================== Função para carregar o carrossel de elenco ==================== //
 async function loadCastCarousel() {
     try {
+        // Busca os dados do elenco
         const response = await fetch(`${api_url}/movie/${id_movie}/credits?api_key=${api_key}&language=pt-BR`);
         const data = await response.json();
 
+        // Seleciona o container do carrossel
         const castCarousel = document.getElementById('cast-carousel');
         if (!castCarousel) return;
 
@@ -104,17 +111,23 @@ async function loadCastCarousel() {
         const cast = data.cast.slice(0, 10);
 
         cast.forEach(actor => {
+            // Usa uma imagem padrão se não houver foto do ator
             const profileUrl = actor.profile_path
                 ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
                 : './assets/img/no-profile.png';
 
             const item = document.createElement('div');
             item.classList.add('item');
+            // Se o personagem tiver mais de uma alcunha, mostra só a primeira (herói/vilão)
+            let characterName = actor.character;
+            if (characterName && characterName.includes('/')) {
+                characterName = characterName.split('/')[1].trim();
+            }
             item.innerHTML = `
-                <div class="cast-card d-flex flex-column align-items-center text-center mb-5">
+                <div class="cast-card d-flex flex-column align-items-center text-center mb-4">
                   <img src="${profileUrl}" alt="${actor.name}" />
                   <h4>${actor.name}</h4>
-                  <p>${actor.character}</p>
+                  <p>${characterName}</p>
                 </div>
               `;
             castCarousel.appendChild(item);
@@ -132,15 +145,6 @@ async function loadCastCarousel() {
             autoplay: false,
             dots: false,
             nav: false,
-            onInitialized: function () {
-                const carousel = document.getElementById('cast-carousel');
-                if (carousel) {
-                    const shadowDiv = document.createElement('div');
-                    shadowDiv.className = 'carousel-shadow';
-                    shadowDiv.innerHTML = `<img src="./assets/img/shadow.png" alt="">`;
-                    carousel.appendChild(shadowDiv);
-                }
-            },
             responsive: {
                 0: { items: 2 },
                 480: { items: 3 },
@@ -158,7 +162,7 @@ async function loadCastCarousel() {
 loadCastCarousel();
 
 
-// Função para buscar e renderizar reviews
+// ==================== Função para buscar e renderizar reviews ==================== //
 async function fetchReviews() {
     try {
         const response = await fetch(`${api_url}/movie/${id_movie}/reviews?api_key=${api_key}&language=pt-BR`);
@@ -185,7 +189,7 @@ function renderReviews(reviews) {
     container.innerHTML = '';
 
     // Mostra apenas as duas primeiras reviews
-    reviews.slice(0, 2).forEach(review => {
+    reviews.slice(1, 3).forEach(review => {
         const author = review.author || "Anônimo";
         const content = review.content || "Sem conteúdo disponível.";
         const date = review.created_at
@@ -195,16 +199,28 @@ function renderReviews(reviews) {
 
         const reviewElement = document.createElement('div');
         reviewElement.classList.add('reviews__container--item', 'col-12', 'col-lg-6');
+        // Função para formatar data por extenso em pt-BR
+        function formatLongDate(dateStr) {
+            if (!dateStr) return "Data não informada";
+            const dateObj = new Date(dateStr);
+            return dateObj.toLocaleDateString("pt-BR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        // Adiciona a review ao container
         reviewElement.innerHTML = `
             <p class="reviews__content">${content}</p>
             <div class="author col-12">
-                <h4 class="author__name col-12">Por: <span>${author}</span></h4>
-                <div class="author__info">
-                    <p class="author__date">${date}</p>
-                    <p class="author__rating">
-                        Nota: ${rating !== undefined ? `<span>${rating}</span> / 10` : 'Sem nota'}
-                    </p>
-                </div>
+            <h4 class="author__name col-12">Por: <span>${author}</span></h4>
+            <div class="author__info">
+                <p class="author__date">${formatLongDate(review.created_at)}</p>
+                <p class="author__rating">
+                Nota: ${rating !== undefined ? `<span>${rating}</span> / 10` : 'Sem nota'}
+                </p>
+            </div>
             </div>
         `;
         container.appendChild(reviewElement);
@@ -214,9 +230,10 @@ function renderReviews(reviews) {
 // chama assim quando quiser carregar as resenhas:
 fetchReviews();
 
-
+// ==================== Função para carregar vídeos ==================== //
 async function loadVideos() {
     try {
+
         const response = await fetch(`${api_url}/movie/${id_movie}/videos?api_key=${api_key}&language=pt-BR`);
         const data = await response.json();
 
@@ -230,7 +247,7 @@ async function loadVideos() {
             videoContainer.innerHTML = '<p class="text-muted">Sem vídeos disponíveis.</p>';
             return;
         }
-
+        // Adiciona cada vídeo ao container
         videos.forEach(video => {
             const item = document.createElement('div');
             item.classList.add('item');
@@ -255,15 +272,6 @@ async function loadVideos() {
             autoplay: false,
             dots: false,
             nav: false,
-            onInitialized: function () {
-                const carousel = document.getElementById('videos');
-                if (carousel) {
-                    const shadowDiv = document.createElement('div');
-                    shadowDiv.className = 'midia-shadow';
-                    shadowDiv.innerHTML = `<img src="./assets/img/shadow.png" alt="">`;
-                    carousel.appendChild(shadowDiv);
-                }
-            },
             responsive: {
                 0: { items: 2, mouseDrag: true, touchDrag: true },
                 1024: { items: 3, mouseDrag: false, touchDrag: false }
@@ -277,7 +285,7 @@ async function loadVideos() {
 
 loadVideos().catch(console.error);
 
-
+// ==================== Função para carregar o carrossel de posters ==================== //
 async function loadPosters() {
     try {
         const response = await fetch(`${api_url}/movie/${id_movie}/images?api_key=${api_key}`);
@@ -295,6 +303,7 @@ async function loadPosters() {
             return;
         }
 
+        // Adiciona cada pôster ao container
         posters.forEach((img, i) => {
             const posterElement = document.createElement('div');
             posterElement.classList.add('poster-item', 'item');
@@ -307,23 +316,13 @@ async function loadPosters() {
             loop: false,
             margin: 20,
             center: false,
-            autowidth: true,
+            autoWidth: true, // igual ao dos vídeos
             autoplay: false,
             dots: false,
             nav: false,
-            onInitialized: function () {
-                const carousel = document.getElementById('posters');
-                if (carousel) {
-                    const shadowDiv = document.createElement('div');
-                    shadowDiv.className = 'midia-shadow';
-                    shadowDiv.innerHTML = `<img src="./assets/img/shadow.png" alt="">`;
-                    carousel.appendChild(shadowDiv);
-                }
-            },
             responsive: {
-                0: { items: 2, mouseDrag: true, touchDrag: true },
-                768: { items: 2, mouseDrag: true, touchDrag: true },
-                1024: { items: 3, mouseDrag: false, touchDrag: false }
+                0: { mouseDrag: true, touchDrag: true },
+                1024: { mouseDrag: false, touchDrag: false }
             }
         });
     } catch (error) {
@@ -334,6 +333,7 @@ async function loadPosters() {
 
 loadPosters().catch(console.error);
 
+// ==================== Função para carregar o carrossel de backdrops ==================== //
 async function loadBackdrops() {
     try {
         const response = await fetch(`${api_url}/movie/${id_movie}/images?api_key=${api_key}`);
@@ -363,23 +363,13 @@ async function loadBackdrops() {
             loop: false,
             margin: 20,
             center: false,
-            autowidth: true,
+            autoWidth: true, // igual ao dos vídeos
             autoplay: false,
             dots: false,
             nav: false,
-            onInitialized: function () {
-                const carousel = document.getElementById('backdrops');
-                if (carousel) {
-                    const shadowDiv = document.createElement('div');
-                    shadowDiv.className = 'midia-shadow';
-                    shadowDiv.innerHTML = `<img src="./assets/img/shadow.png" alt="">`;
-                    carousel.appendChild(shadowDiv);
-                }
-            },
             responsive: {
-                0: { items: 1, mouseDrag: true, touchDrag: true, center: true },
-                768: { items: 2, mouseDrag: true, touchDrag: true },
-                1024: { items: 3, mouseDrag: false, touchDrag: false }
+                0: { mouseDrag: true, touchDrag: true },
+                1024: { mouseDrag: false, touchDrag: false }
             }
         });
     } catch (error) {
@@ -391,9 +381,10 @@ async function loadBackdrops() {
 
 loadBackdrops().catch(console.error);
 
-
+// ==================== Função para carregar o carrossel de filmes similares ==================== //
 async function loadSimilarMovies() {
     try {
+        // Busca os filmes similares
         const response = await fetch(`${api_url}/movie/${id_movie}/similar?api_key=${api_key}&language=pt-BR&page=1`);
         if (!response.ok) throw new Error('Erro ao buscar filmes similares');
         const data = await response.json();
